@@ -1,13 +1,15 @@
 
 import os
 import gzip
-import cPickle
+import pickle
 
 import numpy as np
 from scipy.io import loadmat
 
 import pyhsmm_spiketrains.models
-reload(pyhsmm_spiketrains.models)
+import importlib
+
+importlib.reload(pyhsmm_spiketrains.models)
 from pyhsmm_spiketrains.internals.utils import split_train_test
 
 def load_synth_data(T, K, N, T_test=1000,
@@ -26,7 +28,7 @@ def load_synth_data(T, K, N, T_test=1000,
     data_file = os.path.join(data_dir, file_name)
     if os.path.exists(data_file):
         with gzip.open(data_file, "r") as f:
-            res = cPickle.load(f)
+            res = pickle.load(f,encoding='latin1')
 
     else:
         if model == 'hmm':
@@ -50,11 +52,11 @@ def load_synth_data(T, K, N, T_test=1000,
 
         S_train, Z_train = hmm.generate(T)
         S_test, Z_test = hmm.generate(T_test)
-        print "Num used states: ", len(np.unique(Z_train))
+        print("Num used states: ", len(np.unique(Z_train)))
         res = hmm, S_train, Z_train, S_test, Z_test
 
         with gzip.open(data_file, "w") as f:
-            cPickle.dump(res, f, protocol=-1)
+            pickle.dump(res, f, protocol=-1)
 
     return res
 

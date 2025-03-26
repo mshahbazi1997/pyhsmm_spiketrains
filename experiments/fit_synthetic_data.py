@@ -24,7 +24,7 @@ from experiment_helper import load_synth_data
 # Set the seed
 # seed = np.random.randint(0, 2**16)
 seed = 0
-print "setting seed to ", seed
+print("setting seed to ", seed)
 np.random.seed(seed)
 
 Results = namedtuple(
@@ -55,7 +55,7 @@ def fit(name, model, test_data, N_iter=1000, init_state_seq=None):
     # Initialize with given state seq
     if init_state_seq is not None:
         model.states_list[0].stateseq = init_state_seq
-        for _ in xrange(100):
+        for _ in range(100):
             model.resample_obs_distns()
 
     init_val = evaluate(model)
@@ -95,7 +95,7 @@ def fit_vb(name, model, test_data, N_iter=1000, init_state_seq=None):
     # Initialize with given state seq
     if init_state_seq is not None:
         model.states_list[0].stateseq = init_state_seq
-        for _ in xrange(100):
+        for _ in range(100):
             model.resample_obs_distns()
 
     init_val = evaluate(model)
@@ -238,12 +238,12 @@ def run_experiment(T, K, N, T_test, modelname, version, runnum):
     N = hmm.N
     K_true = len(hmm.used_states)
 
-    print "Running Synthetic Experiment"
-    print "Dataset:\t", data_name
-    print "N:\t\t", N
-    print "N_used:\t", len(hmm.used_states)
-    print "T_train:\t", S_train.shape[0]
-    print "T_test:\t", S_test.shape[0]
+    print("Running Synthetic Experiment")
+    print("Dataset:\t", data_name)
+    print("N:\t\t", N)
+    print("N_used:\t", len(hmm.used_states))
+    print("T_train:\t", S_train.shape[0])
+    print("T_test:\t", S_test.shape[0])
 
     # Define a set of HMMs
     names_list = []
@@ -277,21 +277,21 @@ def run_experiment(T, K, N, T_test, modelname, version, runnum):
     # results_list = []
     for model_name, model_fname, model, method in \
             zip(names_list, fnames_list, model_list, method_list):
-        print "Model: ", model_name
-        print "File:  ", model_fname
-        print ""
+        print("Model: ", model_name)
+        print("File:  ", model_fname)
+        print("")
         output_file = os.path.join(results_dir, model_fname + ".pkl.gz")
 
         # Check for existing results
         if os.path.exists(output_file):
-            print "Found results at: ", output_file
+            print("Found results at: ", output_file)
 
         else:
             res = method(model_name, model, S_test, N_iter=N_iter)
 
             # Save results
             with gzip.open(output_file, "w") as f:
-                print "Saving results to: ", output_file
+                print("Saving results to: ", output_file)
                 cPickle.dump(res, f, protocol=-1)
 
             del res
@@ -306,5 +306,5 @@ if __name__ == "__main__":
     version = 1
     runnum = 1
 
-    for version in xrange(1,11):
+    for version in range(1,11):
         run_experiment(T, K, N, T_test, modelname, version, runnum)
