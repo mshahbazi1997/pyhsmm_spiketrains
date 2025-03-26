@@ -4,7 +4,8 @@ Fit a sequence of models to the rat hippocampal recordings
 import os
 import time
 import gzip
-import cPickle
+import pickle
+import importlib
 
 import numpy as np
 from scipy.io import loadmat
@@ -16,8 +17,13 @@ import matplotlib.pyplot as plt
 import brewer2mpl
 allcolors = brewer2mpl.get_map("Set1", "Qualitative", 9).mpl_colors
 
+import os
+import sys 
+# sys.path.append(os.path.abspath('..'))
+print("Mahdiyar")
+print(os.getcwd())
 import pyhsmm_spiketrains.models
-reload(pyhsmm_spiketrains.models)
+importlib.reload(pyhsmm_spiketrains.models)
 
 from pyhsmm_spiketrains.internals.utils import \
     log_expected_pll, split_train_test
@@ -25,7 +31,7 @@ from pyhsmm_spiketrains.internals.utils import \
 # Set the seed
 # seed = np.random.randint(0, 2**16)
 seed = 0
-print "setting seed to ", seed
+print("setting seed to ", seed)
 np.random.seed(seed)
 
 def load_hipp_data(dataname="hipp_2dtrack_b", trainfrac=0.8):
@@ -302,17 +308,18 @@ def run_experiment():
     dataname = "hipp_2dtrack_a"
     runnum = 1
     output_dir = os.path.join("results", dataname, "run%03d" % runnum)
+    os.makedirs(output_dir, exist_ok=True)
     assert os.path.exists(output_dir)
 
     # Load the data
     N, S_train, pos_train, S_test, pos_test, center, radius = \
         load_hipp_data(dataname)
 
-    print "Running Experiment"
-    print "Dataset:\t", dataname
-    print "N:\t\t", N
-    print "T_train:\t", S_train.shape[0]
-    print "T_test:\t", S_test.shape[0]
+    print("Running Experiment")
+    print("Dataset:\t", dataname)
+    print("N:\t\t", N)
+    print("T_train:\t", S_train.shape[0])
+    print("T_test:\t", S_test.shape[0])
 
     # Fit the baseline model
     static_model = pyhsmm_spiketrains.models.PoissonStatic(N)
@@ -350,9 +357,9 @@ def run_experiment():
     N_iter = 5000
     for model_name, model_fname, model, method in \
             zip(names_list, fnames_list, model_list, method_list):
-        print "Model: ", model_name
-        print "File:  ", model_fname
-        print ""
+        print("Model: ", model_name)
+        print("File:  ", model_fname)
+        print("")
         output_file = os.path.join(output_dir, model_fname + ".pkl.gz")
 
         # Check for existing results
@@ -360,15 +367,15 @@ def run_experiment():
             # print "Loading results from: ", output_file
             # with gzip.open(output_file, "r") as f:
             #     res = cPickle.load(f)
-            print "Results already exist at: ", output_file
+            print("Results already exist at: ", output_file)
 
         else:
             res = method(model_name, model, S_test, N_iter=N_iter)
 
             # Save results
             with gzip.open(output_file, "w") as f:
-                print "Saving results to: ", output_file
-                cPickle.dump(res, f, protocol=-1)
+                print("Saving results to: ", output_file)
+                pickle.dump(res, f, protocol=-1)
 
 
 if __name__ == "__main__":

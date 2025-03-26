@@ -1,7 +1,9 @@
 import numpy as np
 from scipy.special import gammaln
 from scipy.optimize import minimize
-from scipy.misc import logsumexp
+# from scipy.misc import logsumexp
+from scipy.special import logsumexp
+
 
 def log_expected_pll(plls):
     return -np.log(len(plls)) + logsumexp(plls)

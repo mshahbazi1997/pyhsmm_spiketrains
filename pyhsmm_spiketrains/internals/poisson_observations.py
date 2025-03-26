@@ -51,7 +51,8 @@ class PoissonVector(ProductDistribution, Collapsed):
         return alpha_0, beta_0
 
     @hypers.setter
-    def hypers(self, (alpha_0, beta_0)):
+    def hypers(self,params):
+        alpha_0, beta_0 = params
         assert len(alpha_0) == self.N
         assert len(beta_0) == self.N
 
@@ -74,7 +75,8 @@ class PoissonVector(ProductDistribution, Collapsed):
 
     def resample(self,data=[],n=None,tots=None):
         # Resample rates
-        if None not in (n,tots):
+        # if None not in (n,tots):
+        if n is not None and tots is not None:
             for p, tot in zip(self.poissons,tots):
                 p.resample(stats=(n,tot))
         else:

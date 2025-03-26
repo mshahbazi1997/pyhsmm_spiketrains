@@ -1,15 +1,19 @@
 from distutils.core import setup
+from setuptools.extension import Extension
 import numpy as np
-
 from Cython.Build import cythonize
+
+extensions = cythonize([
+    Extension(
+        name="pyhsmm_spiketrains.internals.poisson_statistics",
+        sources=["pyhsmm_spiketrains/internals/poisson_statistics.pyx"],
+        include_dirs=[np.get_include()],
+        extra_compile_args=["-fopenmp"],
+        extra_link_args=["-fopenmp"]
+    )
+])
 
 setup(
     name='pyhsmm_spiketrains',
-    version='0.1',
-    description='Bayesian inference for Poisson latent state space models',
-    author='Scott Linderman',
-    author_email='slinderman@seas.harvard.edu',
-    url='http://www.github.com/slinderman/pyhsmm-spiketrains',
-    ext_modules=cythonize('**/*.pyx'),
-    include_dirs=[np.get_include(),],
+    ext_modules=extensions,
 )

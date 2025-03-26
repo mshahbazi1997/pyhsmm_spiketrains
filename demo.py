@@ -5,11 +5,13 @@ from pybasicbayes.util.text import progprint_xrange
 from pyhsmm.basic.distributions import PoissonDuration
 
 import pyhsmm_spiketrains.models
-reload(pyhsmm_spiketrains.models)
+import importlib
+
+importlib.reload(pyhsmm_spiketrains.models)
 
 # Set the seed
 seed = 0
-print "setting seed to ", seed
+print("setting seed to ", seed)
 np.random.seed(seed)
 
 # Generate a synthetic dataset
@@ -30,7 +32,7 @@ S_test, _ = true_hmm.generate(T_test)
 true_hmm.relabel_by_usage()
 Z_train, Z_test = true_hmm.stateseqs
 N_used = len(true_hmm.used_states)
-print "Number of used states: ", N_used
+print("Number of used states: ", N_used)
 
 # Create a test model with the same parameters, and add the data
 test_hmm = pyhsmm_spiketrains.models.PoissonHDPHMM(N=N, K_max=100)

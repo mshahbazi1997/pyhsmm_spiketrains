@@ -265,7 +265,7 @@ class _PoissonMixin(pyhsmm.models._HMMGibbsSampling):
         # Update the hypers for each cell
         a_f = a_0.copy()
         b_f = b_0.copy()
-        for n in xrange(self.obs_distns[0].N):
+        for n in range(self.obs_distns[0].N):
             nlp = lambda x: nlpc(x,n)
             gnlp = lambda x: gnlpc(x,n)
 
@@ -303,7 +303,7 @@ class _PoissonMixin(pyhsmm.models._HMMGibbsSampling):
         c, d = 1., 1.
         L = np.array([o.lmbdas for o in self.obs_distns])
         used = self.state_usages > 0
-        for n in xrange(N):
+        for n in range(N):
             # Rates of neuron n over all states
             Ln = L[:,n]
 
