@@ -97,8 +97,14 @@ def make_figure1(model, S, Z, A, lmbdas, figdir='.'):
     ax.set_xticks(np.arange(px/2, C*px, step=10*px))
     ax.set_xticklabels(np.arange(0, C, step=10))
     ax.set_ylabel('State')
-    ax.set_yticks(np.arange(px/2,N_used*px, step=5*px))
-    ax.set_yticklabels(np.arange(0,K, step=5))
+    
+    yticks = np.arange(px/2, N_used*px, step=5*px)
+    yticklabels = np.arange(0, len(yticks)) * 5  # so they match
+
+    ax.set_yticks(yticks)
+    ax.set_yticklabels(yticklabels)
+
+
     ax.set_title('Firing rates')
 
     # Add colorbar for transition matrix
@@ -107,8 +113,8 @@ def make_figure1(model, S, Z, A, lmbdas, figdir='.'):
     Colorbar(cbax, im)
     cbax.set_ylabel('Spikes/bin')
 
-    plt.savefig(os.path.join(figdir, "figure1.pdf"))
-    plt.savefig(os.path.join(figdir, "figure1.png"))
+    # plt.savefig(os.path.join(figdir, "figure1.pdf"))
+    # plt.savefig(os.path.join(figdir, "figure1.png"))
     plt.show()
 
 def _plot_transition_matrix(ax, A):

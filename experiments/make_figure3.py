@@ -127,7 +127,7 @@ def fit_with_subsets_of_data(true_model, data, results_dir,
         for N_test in Ns_test:
             Ks_N = []
             for rpt in xrange(N_repeats):
-                print "N_test: ", N_test, ". Repeat: ", rpt
+                print("N_test: ", N_test, ". Repeat: ", rpt)
                 _, Ks = test_N(data, N_test)
                 Ks_N.append(Ks[-1])
             Ks_Ns.append(Ks_N)
@@ -145,8 +145,8 @@ def fit_with_subsets_of_data(true_model, data, results_dir,
         Ks_Ts = []
         for T_test in Ts_test:
             Ks_T = []
-            for rpt in xrange(N_repeats):
-                print "T_test: ", T_test, ". Repeat: ", rpt
+            for rpt in range(N_repeats):
+                print("T_test: ", T_test, ". Repeat: ", rpt)
                 _, Ks = test_T(data, T_test)
                 Ks_T.append(Ks[-1])
             Ks_Ts.append(Ks_T)
@@ -164,8 +164,8 @@ def fit_with_subsets_of_data(true_model, data, results_dir,
         Ks_frs = []
         for fr_test in frs_test:
             Ks_fr = []
-            for rpt in xrange(N_repeats):
-                print "fr_test: ", fr_test, ". Repeat: ", rpt
+            for rpt in range(N_repeats):
+                print("fr_test: ", fr_test, ". Repeat: ", rpt)
                 _, Ks = test_fr(true_model, fr_test)
                 Ks_fr.append(Ks[-1])
             Ks_frs.append(Ks_fr)
@@ -185,7 +185,7 @@ def fit_with_subsets_of_data(true_model, data, results_dir,
         for dt_test in dts_test:
             Ks_dt = []
             for rpt in xrange(N_repeats):
-                print "dt_test: ", dt_test, ". Repeat: ", rpt
+                print("dt_test: ", dt_test, ". Repeat: ", rpt)
                 _, Ks = test_dt(data, dt_test)
                 Ks_dt.append(Ks[-1])
             Ks_dts.append(Ks_dt)

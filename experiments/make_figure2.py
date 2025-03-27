@@ -2,7 +2,7 @@
 Plot the MCMC samples for the hippocampal dataset.
 """
 import os
-import cPickle
+import pickle
 import gzip
 from collections import namedtuple
 
@@ -151,10 +151,10 @@ def plot_results(true_model,
     cbax = create_axis_at_location(fig, 4.4, .5, .1, 1.)
     cbar = Colorbar(cbax, im, label="spikes/bin")
 
-    fig.savefig(os.path.join(figdir, 'figure2.pdf'))
-    fig.savefig(os.path.join(figdir, 'figure2.png'))
+#     fig.savefig(os.path.join(figdir, 'figure2.pdf'))
+#     fig.savefig(os.path.join(figdir, 'figure2.png'))
 
-    print "Plots can be found at %s*.pdf" % os.path.join(figdir, 'figure2')
+    print("Plots can be found at %s*.pdf" % os.path.join(figdir, 'figure2'))
 
 if __name__ == "__main__":
     # Load the data
@@ -178,7 +178,7 @@ if __name__ == "__main__":
     results_type = "hdphmm_scale"
     results_file = os.path.join(results_dir, results_type + ".pkl.gz")
     with gzip.open(results_file, "r") as f:
-        results = cPickle.load(f)
+        results = pickle.load(f,encoding='latin1')
 
     plot_results(hmm, results,
                  S_train,
